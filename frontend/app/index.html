@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Platform PoC</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #0052cc;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 150px;
+            font-family: monospace;
+        }
+
+        button {
+            background: #0052cc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #0043a5;
+        }
+
+        button.secondary {
+            background: #6c757d;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        code {
+            background: #eee;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Local Platform</h1>
+
+        <!-- System Info Section -->
+        <div class="card">
+            <h2>System Status</h2>
+            <div id="sys-info">Loading system info...</div>
+            <div class="status">WebSocket Status: <span id="ws-status">Connecting...</span></div>
+        </div>
+
+        <!-- Raw I/O Section (Text Editor) -->
+        <div class="card">
+            <h2>📝 Text Editor (Raw I/O)</h2>
+            <p style="font-size: 0.8em; color: #666;">Enter an absolute path (e.g., <code>C:/Users/test.txt</code> or
+                <code>/tmp/test.txt</code>)</p>
+
+            <label>File Path</label>
+            <input type="text" id="io-path" placeholder="Absolute path to file...">
+
+            <label>Content</label>
+            <textarea id="io-content" placeholder="File content will appear here..."></textarea>
+
+            <div>
+                <button id="btn-io-read">Open File</button>
+                <button id="btn-io-save">Save File</button>
+            </div>
+            <div id="io-status" class="status"></div>
+        </div>
+
+        <!-- Managed Store Section (Kanban/Data) -->
+        <div class="card">
+            <h2>🗄️ Managed Store (JSON)</h2>
+            <p style="font-size: 0.8em; color: #666;">Data is saved to <code>backend/local_data/</code></p>
+
+            <div class="row">
+                <div class="col">
+                    <label>Collection</label>
+                    <input type="text" id="store-col" value="boards">
+                </div>
+                <div class="col">
+                    <label>Filename (ID)</label>
+                    <input type="text" id="store-id" value="project-alpha">
+                </div>
+            </div>
+
+            <label>JSON Data</label>
+            <textarea id="store-content" style="height: 100px;">{
+  "status": "active",
+  "tasks": ["Task 1", "Task 2"]
+}</textarea>
+
+            <div>
+                <button id="btn-store-load" class="secondary">Load JSON</button>
+                <button id="btn-store-save">Save JSON</button>
+            </div>
+            <div id="store-status" class="status"></div>
+        </div>
+    </div>
+
+    <!-- Import Logic Module -->
+    <script type="module" src="./logic.js"></script>
+
+</body>
+
+</html>
